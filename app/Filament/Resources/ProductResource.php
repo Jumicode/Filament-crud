@@ -26,6 +26,12 @@ class ProductResource extends Resource
             Forms\Components\TextInput::make('name')->required(),
             Forms\Components\TextInput::make('price')->numeric()->required(),
             Forms\Components\Textarea::make('description'),
+
+            Forms\Components\Select::make('categories')
+            ->label('Categorías')
+            ->multiple()
+            ->relationship('categories', 'name')
+            ->preload(),
         ]);
     }
 
@@ -36,6 +42,8 @@ class ProductResource extends Resource
             Tables\Columns\TextColumn::make('name')->label('Producto')->sortable()->searchable(),
             Tables\Columns\TextColumn::make('price')->label('Precio')->sortable(),
             Tables\Columns\TextColumn::make('created_at')->label('Fecha de Creación')->date(),
+            Tables\Columns\TextColumn::make('categories.name')->label('Categorías')->wrap()->limit(30),
+            
         ])
             ->filters([
                 //
